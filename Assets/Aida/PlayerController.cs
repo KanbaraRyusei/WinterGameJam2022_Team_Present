@@ -6,12 +6,18 @@ public class PlayerController : MonoBehaviour
 {
 
     Rigidbody2D _rb;
-    [SerializeField] float _moveSpeed;
-    Vector2 _dir;
-    Vector2 _initialPosition;
+    [SerializeField] GameManager _gameManager;
+    [SerializeField]
+    [Header("プレイヤーの速さ")]
+    float _moveSpeed;
+
+    public Vector2 _dir;
+    public int _timeCount = 0;
+    [SerializeField] 
+    [Header("プレイヤーの初期位置")]
+     Vector2 _initialPosition;
     void Start()
     {
-        _initialPosition = transform.position;
         _rb = GetComponent<Rigidbody2D>();
     }
 
@@ -19,23 +25,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
-        _dir = new Vector2(h, 0);
+        float v = 0.0f;
+        if(this.transform.position.y <= -3)
+        {
+            v = 1f;
+        }
+        _dir = new Vector2(h, v);
         _rb.velocity = _dir * _moveSpeed;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (collision.gameObject.tag == "Enemy")
+       if(collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("衝突");
-            StartCoroutine(PositionCoroutine());
+            _gameManager.GameOver();
         }
-    }
-
-    public IEnumerator PositionCoroutine()
-    {
-        yield return new WaitForSeconds(1.0f);
-        transform.position = _initialPosition;
     }
 }
