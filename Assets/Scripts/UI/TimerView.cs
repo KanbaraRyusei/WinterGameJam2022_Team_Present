@@ -10,23 +10,26 @@ using UnityEngine.UI;
 public class TimerView : MonoBehaviour
 {
     [SerializeField]
-    private Slider _slider;
+    private Text _text;
+
+    private float _limit;
 
     /// <summary>
-    /// Sliderの最大値を設定する
+    /// 時間の最大値を設定する
     /// </summary>
     /// <param name="value"></param>
     public void SetMaxValue(float value)
     {
-        _slider.maxValue = value;
+        _limit = value;
     }
 
     /// <summary>
-    /// Sliderの現在の値を設定する
+    /// 時間の現在の値を設定する
     /// </summary>
     /// <param name="value"></param>
     public void SetValue(float value)
     {
-        _slider.value = value;
+        int time = (int)_limit - (int)value;
+        _text.text = time.ToString();
     }
 }

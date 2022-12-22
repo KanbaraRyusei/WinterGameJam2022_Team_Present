@@ -4,41 +4,48 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     Rigidbody2D _rb;
     [SerializeField] GameManager _gameManager;
-    [SerializeField]
-    [Header("プレイヤーの速さ")]
     float _moveSpeed;
-
-    public Vector2 _dir;
-    public int _timeCount = 0;
-    [SerializeField] 
-    [Header("プレイヤーの初期位置")]
-     Vector2 _initialPosition;
+    Vector2 _dir;
+    BoxCollider2D _collider;
+    AudioSource _audio;
+    [SerializeField] CreateStage _create;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<BoxCollider2D>();
+        _audio = GetComponent<AudioSource>();
     }
 
-   
+  
     void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = 0.0f;
-        if(this.transform.position.y <= -3)
+        if (_create._start)
         {
-            v = 1f;
+            float h = Input.GetAxisRaw("Horizontal");
+            float v = 0.0f;
+            if (this.transform.position.y <= -3)
+            {
+                v = 1f;
+            }
+            _dir = new Vector2(h, v);
+            _rb.velocity = _dir * _moveSpeed;
         }
-        _dir = new Vector2(h, v);
-        _rb.velocity = _dir * _moveSpeed;
     }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
-       if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Enemy")
         {
+            _create._start = false;
             _gameManager.GameOver();
         }
+    }
+    public IEnumerator GameOverCoroutine()
+    {
+        _collider.enabled = false;
+        _audio.Play();
+        yield return new WaitForSeconds(1.0f);
+        
     }
 }
