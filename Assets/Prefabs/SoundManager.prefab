@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3549155930518859686
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3549155930518859688}
+  - component: {fileID: 3549155930518859689}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3549155930518859688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3549155930518859686}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3549155930518859689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3549155930518859686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7992034b7d460b45b7c8abfeaee6328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDontDestroy: 0
+  _bGMClips:
+  - _name: Title
+    _clip: {fileID: 8300000, guid: 0abee0ecb79f8784fbc5e7c101dfd99d, type: 3}
+    _volume: 1
+    _loop: 1
+  - _name: GameScene
+    _clip: {fileID: 8300000, guid: fa2db0dd99aa823418a723042e84ed6d, type: 3}
+    _volume: 1
+    _loop: 1
+  - _name: GameClear
+    _clip: {fileID: 8300000, guid: 727e6beccb114134297be660fde329e8, type: 3}
+    _volume: 1
+    _loop: 1
+  - _name: GameOver
+    _clip: {fileID: 8300000, guid: 27f3c6f79c6137a4cbcc7256e609130c, type: 3}
+    _volume: 1
+    _loop: 1
+  _sEClips:
+  - _name: ButtonClick
+    _clip: {fileID: 8300000, guid: 8532a1b56419c2e49bdcab1a926f9c85, type: 3}
+    _volume: 1
+    _loop: 0
+  _masterVolume: 1
+  _bGMVolume: 1
+  _sEVolume: 1
