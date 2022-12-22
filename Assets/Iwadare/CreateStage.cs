@@ -10,7 +10,7 @@ public class CreateStage : MonoBehaviour
 
     [Tooltip("Stageのyのサイズ")]
     [Header("Stageのyのサイズを入力")]
-    [SerializeField] int _stageSize = 15;
+    [SerializeField] float _stageSize = 60;
 
     [Tooltip("作成するStageのindex")]
     int _stageIndex;
@@ -36,6 +36,12 @@ public class CreateStage : MonoBehaviour
     [Tooltip("最初に配置するステージを生成するためのbool型")]
     bool _firstIns;
 
+    [Tooltip("一定の時間が経過したらスピードアップするためのbool型")]
+    public bool _speedUp;
+
+    [Tooltip("スタート時に実行するbool型")]
+    public bool _start;
+
     void Start()
     {
         //自動生成の仕様上、スクロールするかしないかによってIndexを変えている。
@@ -49,28 +55,38 @@ public class CreateStage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_scroll)
+        if (_start)
         {
-            //stageのスクロール
-            foreach (GameObject stage in _stageList)
+            if (_scroll)
             {
-                stage.transform.Translate(0f, Time.deltaTime * _scrollSpeed, 0f);
-            }
+                //stageのスクロール
+                foreach (GameObject stage in _stageList)
+                {
+                    if (!_speedUp)
+                    {
+                        stage.transform.Translate(0f, Time.deltaTime * _scrollSpeed, 0f);
+                    }
+                    else
+                    {
+                        stage.transform.Translate(0f, Time.deltaTime * _scrollSpeed * 1.5f, 0f);
+                    }
+                }
 
-            if (_stageList[1].transform.position.y <= 0)
-            {
-                StageManager(_aheadStage);
+                if (_stageList[1].transform.position.y <= 0)
+                {
+                    StageManager(_aheadStage);
+                }
             }
-        }
-        else
-        {
-            //プレイヤーまたはカメラの位置から、現在のステージのインデックスを計算する。
-            int targetPosIndex = (int)(_target.position.y / _stageSize);
-
-            //現在のステージの中間まで行ったら(処理としては次のステージに入ったら)ステージの更新処理を行う。
-            if (targetPosIndex + _aheadStage > _stageIndex)
+            else
             {
-                StageManager(targetPosIndex + _aheadStage);
+                //プレイヤーまたはカメラの位置から、現在のステージのインデックスを計算する。
+                int targetPosIndex = (int)(_target.position.y / _stageSize);
+
+                //現在のステージの中間まで行ったら(処理としては次のステージに入ったら)ステージの更新処理を行う。
+                if (targetPosIndex + _aheadStage > _stageIndex)
+                {
+                    StageManager(targetPosIndex + _aheadStage);
+                }
             }
         }
     }
