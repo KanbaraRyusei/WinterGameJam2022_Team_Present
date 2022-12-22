@@ -11,6 +11,8 @@ using System;
 /// </summary>
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
+    #region Private Members
+
     [SerializeField]
     [Header("BGMのクリップ")]
     private AudioData[] _bGMClips;
@@ -22,20 +24,24 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [SerializeField]
     [Header("マスター音量")]
     [Range(0, 1)]
-    private float _masterVolume;
+    private float _masterVolume = 1f;
 
     [SerializeField]
     [Header("音楽の音量")]
     [Range(0, 1)]
-    private float _bGMVolume;
+    private float _bGMVolume = 1f;
 
     [SerializeField]
     [Header("効果音の音量")]
     [Range(0, 1)]
-    private float _sEVolume;
+    private float _sEVolume = 1f;
 
     private AudioSource _audioSourceBGM;
     private List<AudioSource> _audioSourceSEs;
+
+    #endregion
+
+    #region Unity Events
 
     protected override void Awake()
     {
@@ -46,6 +52,10 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             _audioSourceSEs[i] = gameObject.AddComponent<AudioSource>();
         }
     }
+
+    #endregion
+
+    #region UsePlayFunctions
 
     /// <summary>
     /// BGMを鳴らす関数
@@ -146,6 +156,41 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         }
     }
 
+    #endregion
+
+    #region Volume Setter
+
+    /// <summary>
+    /// マスター音量を設定する
+    /// </summary>
+    /// <param name="value"></param>
+    public void MasterVolumeSet(float value)
+    {
+        _masterVolume = value;
+    }
+
+    /// <summary>
+    /// BGMの音量を設定する
+    /// </summary>
+    /// <param name="value"></param>
+    public void BGMVolumeSet(float value)
+    {
+        _bGMVolume = value;
+    }
+
+    /// <summary>
+    /// SEの音量を設定する
+    /// </summary>
+    /// <param name="value"></param>
+    public void SEVolumeSet(float value)
+    {
+        _sEVolume = value;
+    }
+
+    #endregion
+
+    #region FindData Functions
+
     /// <summary>
     /// 名前からAudioDataを探す関数
     /// </summary>
@@ -218,6 +263,10 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         return null;
     }
 
+    #endregion
+
+    #region Search AudioSource
+
     /// <summary>
     /// 空いているAudioSourceを探して返す(SE用のみ)
     /// </summary>
@@ -236,6 +285,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         _audioSourceSEs.Add(newAudioSource);
         return newAudioSource;
     }
+
+    #endregion
 }
 
 [Serializable]
