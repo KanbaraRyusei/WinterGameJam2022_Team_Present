@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// ゲーム内でのBGM、SEを管理するクラス
+/// インスペクターからデータを登録し、
+/// それぞれクリップまたは名前指定で音を鳴らす
+/// また、登録されたデータをもとに音量やループするかが自動で設定される
+/// </summary>
 public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
     [SerializeField]
@@ -57,6 +63,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             _audioSourceBGM.volume = volume * _masterVolume * _bGMVolume * data.Volume;
             _audioSourceBGM.PlayOneShot(clip);
+            _audioSourceBGM.loop = data.Loop;
         }
         else
         {
@@ -81,6 +88,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         if(data != null)
         {
             _audioSourceBGM.PlayOneShot(data.Clip);
+            _audioSourceBGM.loop = data.Loop;
         }
         else
         {
@@ -105,6 +113,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             seSource.volume = volume * _masterVolume * _sEVolume * data.Volume;
             seSource.PlayOneShot(clip);// SEが空いているAudioSourceで音を鳴らすことで、複数音を鳴らせる
+            seSource.loop = data.Loop;
         }
         else
         {
@@ -129,6 +138,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             seSource.volume = volume * _masterVolume * _sEVolume * data.Volume;
             seSource.PlayOneShot(data.Clip);// SEが空いているAudioSourceで音を鳴らすことで、複数音を鳴らせる
+            seSource.loop = data.Loop;
         }
         else
         {
@@ -231,12 +241,31 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 [Serializable]
 public class AudioData
 {
-
     /// <summary>名前(インスペクターから登録)</summary>
-    public string Name = "";
+    public string Name => _name;
 
-    public AudioClip Clip = null;
+    /// <summary>クリップを設定</summary>
+    public AudioClip Clip => _clip;
 
     /// <summary>各AudioClipの音量設定</summary>
-    public float Volume = 1f;
+    public float Volume => _volume;
+
+    /// <summary>ループするか設定</summary>
+    public bool Loop => _loop;
+
+    [SerializeField]
+    [Header("名前を登録")]
+    private string _name = "";
+
+    [SerializeField]
+    [Header("クリップを設定")]
+    private AudioClip _clip = null;
+
+    [SerializeField]
+    [Header("音量設定")]
+    private float _volume = 1f;
+
+    [SerializeField]
+    [Header("ループするか設定")]
+    private bool _loop = false;
 }
