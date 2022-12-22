@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// ゲームの進行管理をするクラス
+/// 時間をUIに表示する際の値を保持している
+/// MVP設計のM(Model)の部分
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     /// <summary>制限時間</summary>
