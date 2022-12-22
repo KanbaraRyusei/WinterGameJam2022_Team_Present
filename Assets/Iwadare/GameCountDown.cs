@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class GameCountDown : MonoBehaviour
 {
-    CreateStage _generator;
+    
+    [SerializeField] CreateStage _generator;
+    [SerializeField] GameManager _gM;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        _generator = GameObject.Find("StageGanarator").GetComponent<CreateStage>();
+        if (_gM?.TimeLimit <= 30)
+        {
+            _generator._speedUp = true;
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void EndCountDown()
     {
         _generator._start = true;
-        Destroy(gameObject);
+        _gM?.OnGameStart();
     }
 
 }
