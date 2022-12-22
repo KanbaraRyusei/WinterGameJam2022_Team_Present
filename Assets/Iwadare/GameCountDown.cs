@@ -10,7 +10,7 @@ public class GameCountDown : MonoBehaviour
 
     private void Update()
     {
-        if (_gM?.TimeLimit <= 30)
+        if (_gM.CurrentTime >= 30)
         {
             _generator._speedUp = true;
             Destroy(gameObject);
@@ -21,7 +21,7 @@ public class GameCountDown : MonoBehaviour
     public void EndCountDown()
     {
         _generator._start = true;
-        _gM?.OnGameStart();
+        _gM.GameStart();
     }
 
 }
