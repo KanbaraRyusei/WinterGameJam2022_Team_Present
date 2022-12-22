@@ -6,9 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D _rb;
     [SerializeField] GameManager _gameManager;
-    float _moveSpeed;
+    [SerializeField] float _moveSpeed = 10f;
     Vector2 _dir;
     BoxCollider2D _collider;
+    CircleCollider2D _circle;
     AudioSource _audio;
     [SerializeField] CreateStage _create;
     void Start()
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();
         _audio = GetComponent<AudioSource>();
+        _circle = GetComponent<CircleCollider2D>();
     }
 
   
@@ -37,15 +39,18 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
+            _circle.enabled = false;
             _create._start = false;
             _gameManager.GameOver();
+        }
+        else
+        {
+            _create._start = true;
         }
     }
     public IEnumerator GameOverCoroutine()
     {
-        _collider.enabled = false;
         _audio.Play();
         yield return new WaitForSeconds(1.0f);
-        
     }
 }
