@@ -24,7 +24,10 @@ public class GameManager : MonoBehaviour
     private string _gameOverSceneName = "GameOver";
 
     private float _time = 0f;// 現在の経過時間
+    private bool _isTimerStop = true;
 
+    /// <summary>ゲームスタート時に呼ばれるデリゲート ゲームスタート時に何か処理をするときにどうぞ</summary>
+    public Action OnGameStart;
     /// <summary>ゲームクリア時に呼ばれるデリゲート ゲームクリア時に何か処理をするときにどうぞ</summary>
     public Action OnGameClear;
 
@@ -33,12 +36,23 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (_isTimerStop) return;// 始まるまでカウントしない
         _time += Time.deltaTime;
         if(_timeLimit < _time)// 制限時間になったら
         {
             Debug.Log("LimitTime!!");
             GameClear();
+            _isTimerStop = true;
         }
+    }
+
+    /// <summary>
+    /// ゲームスタート時に呼ばれる関数
+    /// </summary>
+    public void GameStart()
+    {
+        OnGameStart?.Invoke();
+        _isTimerStop = false;
     }
 
     /// <summary>
