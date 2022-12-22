@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _moveSpeed = 10f;
     Vector2 _dir;
     BoxCollider2D _collider;
-    CircleCollider2D _circle;
     AudioSource _audio;
     [SerializeField] CreateStage _create;
     void Start()
@@ -17,7 +16,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();
         _audio = GetComponent<AudioSource>();
-        _circle = GetComponent<CircleCollider2D>();
+        SoundManager.Instance.PlayBGM("GameScene");
     }
 
   
@@ -34,14 +33,19 @@ public class PlayerController : MonoBehaviour
             _dir = new Vector2(h, v);
             _rb.velocity = _dir * _moveSpeed;
         }
+        else
+        {
+            _dir = new Vector2(0, 0);
+            _rb.velocity = _dir * _moveSpeed;
+        }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            _circle.enabled = false;
+            _collider.enabled = false;
             _create._start = false;
-            _gameManager.GameOver();
+            StartCoroutine(GameOverCoroutine());
         }
         else
         {
@@ -52,5 +56,6 @@ public class PlayerController : MonoBehaviour
     {
         _audio.Play();
         yield return new WaitForSeconds(1.0f);
+        _gameManager.GameOver();
     }
 }

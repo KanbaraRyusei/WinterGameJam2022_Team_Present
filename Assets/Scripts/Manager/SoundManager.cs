@@ -46,6 +46,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     protected override void Awake()
     {
         base.Awake();
+        _audioSourceBGM = GetComponent<AudioSource>();
         _audioSourceSEs = new List<AudioSource>(_sEClips.Length);
         for (int i = 0; i < _audioSourceSEs.Count; i++)
         {
@@ -91,7 +92,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     /// <param name="volume"></param>
     public void PlayBGM(string name, float volume = 1f)
     {
-        _audioSourceBGM.Stop();
+        //_audioSourceBGM.Stop();
         var data = FindBGMClip(name);
         _audioSourceBGM.volume = volume * _masterVolume * _bGMVolume * data.Volume;
 
