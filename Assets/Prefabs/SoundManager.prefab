@@ -67,6 +67,14 @@ MonoBehaviour:
     _clip: {fileID: 8300000, guid: 8532a1b56419c2e49bdcab1a926f9c85, type: 3}
     _volume: 1
     _loop: 0
+  - _name: Explosion
+    _clip: {fileID: 8300000, guid: 3e4a8dcc05b763a499f25721a4092c7a, type: 3}
+    _volume: 1
+    _loop: 0
+  - _name: Hit
+    _clip: {fileID: 8300000, guid: 5b7cf239c26679b438ed01ddfaec6c56, type: 3}
+    _volume: 1
+    _loop: 0
   _masterVolume: 1
   _bGMVolume: 1
   _sEVolume: 1
