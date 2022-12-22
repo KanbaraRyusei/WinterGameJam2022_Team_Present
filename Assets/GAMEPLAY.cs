@@ -8,7 +8,7 @@ public class GAMEPLAY : MonoBehaviour
     public void START()
     {
 
-        SceneLoder.LoadScene("NEXT");
+        SceneLoder.LoadScene("IwadareScene");
     }
 }
 
