@@ -10,7 +10,7 @@ public class CreateStage : MonoBehaviour
 
     [Tooltip("Stageのyのサイズ")]
     [Header("Stageのyのサイズを入力")]
-    [SerializeField] int _stageSize = 15;
+    [SerializeField] float _stageSize = 15;
 
     [Tooltip("作成するStageのindex")]
     int _stageIndex;
